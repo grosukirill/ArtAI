@@ -1,6 +1,5 @@
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import LabelBinarizer
-from PIL import Image
+from PIL import Image, ImageEnhance
 import numpy as np
 import pandas as pd
 import joblib
@@ -9,14 +8,14 @@ import joblib
 def img_to_csv():
     column_names = list()
     column_names.append('label')
-    for i in range(2500):
+    for i in range(10000):
         column_names.append(str(i))
 
     data_frame = pd.DataFrame(columns=column_names)
 
     num_images = 0
 
-    for i in range(0, 726):
+    for i in range(0, 727):
         if (i < 10):
             img = Image.open("./data/airplane/airplane_000"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_000"+str(i)+".jpg")
@@ -27,20 +26,21 @@ def img_to_csv():
             img = Image.open("./data/airplane/airplane_0"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_0"+str(i)+".jpg")
 
-        img = img.resize((50, 50), Image.Resampling.NEAREST)
+        img = img.convert('L')
+        img = img.resize((100, 100), Image.Resampling.NEAREST)
         img.load()
 
         img_data = np.asarray(img, dtype="int32")
 
         data = []
         data.append('airplane')
-        for y in range(50):
-            for x in range(50):
+        for y in range(100):
+            for x in range(100):
                 data.append(img_data[x][y])
         data_frame.loc[num_images] = data
         num_images += 1
 
-    for i in range(0, 967):
+    for i in range(0, 968):
         if (i < 10):
             img = Image.open("./data/car/car_000"+str(i)+".jpg")
             print("Added: " + "./data/car/car_000"+str(i)+".jpg")
@@ -51,15 +51,16 @@ def img_to_csv():
             img = Image.open("./data/car/car_0"+str(i)+".jpg")
             print("Added: " + "./data/car/car_0"+str(i)+".jpg")
 
-        img = img.resize((50, 50), Image.Resampling.NEAREST)
+        img = img.convert('L')
+        img = img.resize((100, 100), Image.Resampling.NEAREST)
         img.load()
 
         img_data = np.asarray(img, dtype="int32")
 
         data = []
         data.append('car')
-        for y in range(50):
-            for x in range(50):
+        for y in range(100):
+            for x in range(100):
                 data.append(img_data[x][y])
         data_frame.loc[num_images] = data
 
@@ -78,18 +79,51 @@ def create_model():
     model = DecisionTreeClassifier()
     model.fit(X, y)
 
-    img = Image.open("C:/Users/Kirill/Downloads/airplane.jpg")
-    img = img.resize((50, 50), Image.Resampling.NEAREST)
+    img = Image.open("C:/Users/Kirill/Downloads/car.jpg")
+    img = img.convert('L')
+    img = img.resize((100, 100), Image.Resampling.NEAREST)
     img.load()
 
     img_data = np.asarray(img, dtype="int32")
 
     data = []
-    for y in range(50):
-        for x in range(50):
+    for y in range(100):
+        for x in range(100):
             data.append(img_data[x][y])
-    predictions = model.predict(data)
+    df2 = pd.DataFrame()
+    column_names = list()
+    for i in range(10000):
+        column_names.append(str(i))
+
+    df2 = pd.DataFrame(columns=column_names)
+    df2.loc[0] = data
+    df2.to_csv("temp.csv", index=False)
+    df3 = pd.read_csv("temp.csv")
+    predictions = model.predict(df3)
+    print(predictions)
+
+    img = Image.open("C:/Users/Kirill/Downloads/airplane.jpg")
+    img = img.convert('L')
+    img = img.resize((100, 100), Image.Resampling.NEAREST)
+    img.load()
+
+    img_data = np.asarray(img, dtype="int32")
+
+    data = []
+    for y in range(100):
+        for x in range(100):
+            data.append(img_data[x][y])
+    df2 = pd.DataFrame()
+    column_names = list()
+    for i in range(2500):
+        column_names.append(str(i))
+
+    df2 = pd.DataFrame(columns=column_names)
+    df2.loc[0] = data
+    df2.to_csv("temp.csv", index=False)
+    df3 = pd.read_csv("temp.csv")
+    predictions = model.predict(df3)
     print(predictions)
 
 
-create_model()
+img_to_csv()
