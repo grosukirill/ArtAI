@@ -8,14 +8,14 @@ import joblib
 def img_to_csv():
     column_names = list()
     column_names.append('label')
-    for i in range(10000):
+    for i in range(40000):
         column_names.append(str(i))
 
     data_frame = pd.DataFrame(columns=column_names)
 
     num_images = 0
 
-    for i in range(0, 727):
+    for i in range(0, 501):
         if (i < 10):
             img = Image.open("./data/airplane/airplane_000"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_000"+str(i)+".jpg")
@@ -27,20 +27,19 @@ def img_to_csv():
             print("Added: " + "./data/airplane/airplane_0"+str(i)+".jpg")
 
         img = img.convert('L')
-        img = img.resize((100, 100), Image.Resampling.NEAREST)
-        img.load()
+        img = img.resize((200, 200), Image.Resampling.NEAREST)
 
         img_data = np.asarray(img, dtype="int32")
 
         data = []
         data.append('airplane')
-        for y in range(100):
-            for x in range(100):
+        for y in range(200):
+            for x in range(200):
                 data.append(img_data[x][y])
         data_frame.loc[num_images] = data
         num_images += 1
 
-    for i in range(0, 968):
+    for i in range(0, 501):
         if (i < 10):
             img = Image.open("./data/car/car_000"+str(i)+".jpg")
             print("Added: " + "./data/car/car_000"+str(i)+".jpg")
@@ -52,15 +51,14 @@ def img_to_csv():
             print("Added: " + "./data/car/car_0"+str(i)+".jpg")
 
         img = img.convert('L')
-        img = img.resize((100, 100), Image.Resampling.NEAREST)
-        img.load()
+        img = img.resize((200, 200), Image.Resampling.NEAREST)
 
         img_data = np.asarray(img, dtype="int32")
 
         data = []
         data.append('car')
-        for y in range(100):
-            for x in range(100):
+        for y in range(200):
+            for x in range(200):
                 data.append(img_data[x][y])
         data_frame.loc[num_images] = data
 
@@ -81,18 +79,17 @@ def create_model():
 
     img = Image.open("C:/Users/Kirill/Downloads/car.jpg")
     img = img.convert('L')
-    img = img.resize((100, 100), Image.Resampling.NEAREST)
-    img.load()
+    img = img.resize((200, 200), Image.Resampling.NEAREST)
 
     img_data = np.asarray(img, dtype="int32")
 
     data = []
-    for y in range(100):
-        for x in range(100):
+    for y in range(200):
+        for x in range(200):
             data.append(img_data[x][y])
     df2 = pd.DataFrame()
     column_names = list()
-    for i in range(10000):
+    for i in range(40000):
         column_names.append(str(i))
 
     df2 = pd.DataFrame(columns=column_names)
@@ -104,18 +101,17 @@ def create_model():
 
     img = Image.open("C:/Users/Kirill/Downloads/airplane.jpg")
     img = img.convert('L')
-    img = img.resize((100, 100), Image.Resampling.NEAREST)
-    img.load()
+    img = img.resize((200, 200), Image.Resampling.NEAREST)
 
     img_data = np.asarray(img, dtype="int32")
 
     data = []
-    for y in range(100):
-        for x in range(100):
+    for y in range(200):
+        for x in range(200):
             data.append(img_data[x][y])
     df2 = pd.DataFrame()
     column_names = list()
-    for i in range(2500):
+    for i in range(40000):
         column_names.append(str(i))
 
     df2 = pd.DataFrame(columns=column_names)
