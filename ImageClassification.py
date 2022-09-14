@@ -68,14 +68,18 @@ def img_to_csv():
 
 
 def create_model():
-    df = pd.read_csv('data.csv')
-    X_train = []
-    y_train = []
-    X = df.drop(columns=['label'])
-    y = df['label']
+    # df = pd.read_csv('data.csv')
+    # X_train = []
+    # y_train = []
+    # X = df.drop(columns=['label'])
+    # y = df['label']
 
-    model = DecisionTreeClassifier()
-    model.fit(X, y)
+    # model = DecisionTreeClassifier()
+    # model.fit(X, y)
+
+    # joblib.dump(model, "model.joblib")
+
+    model = joblib.load("model.joblib")
 
     img = Image.open("C:/Users/Kirill/Downloads/car.jpg")
     img = img.convert('L')
@@ -122,4 +126,4 @@ def create_model():
     print(predictions)
 
 
-img_to_csv()
+create_model()
