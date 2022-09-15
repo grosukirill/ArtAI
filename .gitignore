@@ -1,7 +1,7 @@
 ArtAI/
 .idea/
 data/
-
+venv/
 
 data.csv
 temp.csv

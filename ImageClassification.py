@@ -3,6 +3,7 @@ from PIL import Image, ImageEnhance
 import numpy as np
 import pandas as pd
 import joblib
+import config as conf
 
 
 def img_to_csv():
@@ -16,13 +17,13 @@ def img_to_csv():
     num_images = 0
 
     for i in range(0, 501):
-        if (i < 10):
+        if i < 10:
             img = Image.open("./data/airplane/airplane_000"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_000"+str(i)+".jpg")
-        elif(i >= 10 and i < 100):
+        elif 10 <= i < 100:
             img = Image.open("./data/airplane/airplane_00"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_00"+str(i)+".jpg")
-        elif(i >= 100 and i < 1000):
+        elif 100 <= i < 1000:
             img = Image.open("./data/airplane/airplane_0"+str(i)+".jpg")
             print("Added: " + "./data/airplane/airplane_0"+str(i)+".jpg")
 
@@ -31,8 +32,7 @@ def img_to_csv():
 
         img_data = np.asarray(img, dtype="int32")
 
-        data = []
-        data.append('airplane')
+        data = ['airplane']
         for y in range(200):
             for x in range(200):
                 data.append(img_data[x][y])
@@ -40,13 +40,13 @@ def img_to_csv():
         num_images += 1
 
     for i in range(0, 501):
-        if (i < 10):
+        if i < 10:
             img = Image.open("./data/car/car_000"+str(i)+".jpg")
             print("Added: " + "./data/car/car_000"+str(i)+".jpg")
-        elif(i >= 10 and i < 100):
+        elif 10 <= i < 100:
             img = Image.open("./data/car/car_00"+str(i)+".jpg")
             print("Added: " + "./data/car/car_00"+str(i)+".jpg")
-        elif(i >= 100 and i < 1000):
+        elif 100 <= i < 1000:
             img = Image.open("./data/car/car_0"+str(i)+".jpg")
             print("Added: " + "./data/car/car_0"+str(i)+".jpg")
 
@@ -55,8 +55,7 @@ def img_to_csv():
 
         img_data = np.asarray(img, dtype="int32")
 
-        data = []
-        data.append('car')
+        data = ['car']
         for y in range(200):
             for x in range(200):
                 data.append(img_data[x][y])
